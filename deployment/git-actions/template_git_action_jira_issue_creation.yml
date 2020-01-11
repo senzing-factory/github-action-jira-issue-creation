@@ -1,0 +1,18 @@
+on: push
+name: Jira Issue Creation Demo
+jobs:
+  jiraIssueCreation:
+    name: Jira Issue Creation Demo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Jira Creation Demo
+        uses: senzing/git-action-jira-issue-creation@1.0.0
+        env:
+          JIRA_API_TOKEN: 'jiraApiToke'
+          JIRA_USERNAME: 'user@email.com'
+          JIRA_ACCOUNT_URL: 'https://someaccount.atlassian.net/'
+          JIRA_PROJECT: 'git-action-jira-issue-creation'
+          JIRA_ISSUE_TYPE: 'Demo''ing Jira Issue Creation'
+          JIRA_ISSUE_DESCRIPTION: 'Demo''ing Jira Issue Creation'
+          JIRA_ISSUE_SUMMARY: 'Demo''ing Jira Issue Creation'

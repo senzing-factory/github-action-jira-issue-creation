@@ -1,12 +1,12 @@
-name: 'Container Action Template'
-description: 'Get started with Container actions'
-author: 'GitHub'
-inputs: 
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+name: 'Git Action Jira Issue Creation'
+description: 'Git Action jira issue created by Git Actions'
+author: 'Senzing'
+branding:
+  icon: 'message-square'
+  color: 'purple'
+outputs:
+  jira_issue_url:
+    description: 'Url to the jira issue created'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.myInput }}
+  image: 'docker://senzing/git-action-jira-issue-creation:1.0.0'
