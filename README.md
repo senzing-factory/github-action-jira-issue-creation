@@ -22,13 +22,13 @@ jobs:
       - name: Jira Creation Demo
         uses: senzing/git-action-jira-issue-creation@master
         env:
-          JIRA_API_TOKEN: 'jiraApiToke'
-          JIRA_USERNAME: 'user@email.com'
-          JIRA_ACCOUNT_URL: 'https://someaccount.atlassian.net/'
-          JIRA_PROJECT: 'jira-issue-creation'
-          JIRA_ISSUE_TYPE: 'Demo''ing Jira Issue Creation'
-          JIRA_ISSUE_DESCRIPTION: 'Demo''ing Jira Issue Creation'
-          JIRA_ISSUE_SUMMARY: 'Demo''ing Jira Issue Creation'
+          JIRA_ACCOUNT_URL: https://someaccount.atlassian.net/
+          JIRA_API_TOKEN: jiraApiToken
+          JIRA_ISSUE_DESCRIPTION: Demo'ing Jira Issue Creation
+          JIRA_ISSUE_SUMMARY: Demo'ing Jira Issue Creation
+          JIRA_ISSUE_TYPE: Demo'ing Jira Issue Creation
+          JIRA_PROJECT: jira-issue-creation
+          JIRA_USERNAME: user@email.com
 ```
 
 Go [here](deployment/git-actions/template_git_action_jira_issue_creation.yml) for a template yml with all environment variables.
@@ -39,13 +39,13 @@ These are the environment variables that can be set to pass in additional inform
 
 | Variable Name      | Required | Description |
 |--------------------|:--------:|-------------|
-| IRA_API_TOKEN | Yes | Jira API Token used instead of a password. |
-| JIRA_USERNAME | Yes | Jira user email. |
 | JIRA_ACCOUNT_URL | Yes | Base url to the Jira account. |
-| JIRA_PROJECT | Yes | Jira project the ticket will be filed under. |
-| JIRA_ISSUE_TYPE | Yes | Type of issue to be created [Bug or Task]. |
+| JIRA_API_TOKEN | Yes | Jira API Token used instead of a password. |
 | JIRA_ISSUE_DESCRIPTION | Yes | Body of the Jira Issue. |
 | JIRA_ISSUE_SUMMARY | Yes | Title of the Jira Issue. |
+| JIRA_ISSUE_TYPE | Yes | Type of issue to be created (Bug or Task). |
+| JIRA_PROJECT | Yes | Jira project the ticket will be filed under. |
+| JIRA_USERNAME | Yes | Jira user email. |
 
 ## Reference
 
