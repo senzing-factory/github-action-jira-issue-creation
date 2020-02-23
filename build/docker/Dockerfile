@@ -13,6 +13,8 @@ RUN apk update && \
 # Copy repo
 COPY . /go/src/git-action-jira-issue-creation
 
+WORKDIR /go/src/git-action-jira-issue-creation
+
 # Building go app
 RUN make build
 
