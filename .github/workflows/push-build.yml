@@ -13,7 +13,7 @@ jobs:
       - name: Print Environment Variables
         run: printenv
       - name: Check out to branch
-        run: git checkout ${GITHUB_HEAD_REF:-${GITHUB_REF##*/}}
+        run: git checkout origin/${GITHUB_HEAD_REF:-${GITHUB_REF##*/}}
       - name: Build Docker Image
         id: build_docker_image
         run: make docker-build
