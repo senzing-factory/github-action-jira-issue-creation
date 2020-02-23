@@ -1,19 +1,19 @@
-# -------------
-# VARIABLES
-# -------------
+# -----------------------------------------------------------------------------
+# Variables
+# -----------------------------------------------------------------------------
 # Git variables
 
 GIT_REPOSITORY_NAME := $(shell basename `git rev-parse --show-toplevel`)
 GIT_VERSION := $(shell git describe --always --tags --long --dirty | sed -e 's/\-0//' -e 's/\-g.......//')
 
-# -------------
-# FUNCTIONS
-# -------------
+# -----------------------------------------------------------------------------
+# Functions
+# -----------------------------------------------------------------------------
 
 
-# -------------
-# TASKS
-# -------------
+# -----------------------------------------------------------------------------
+# Tasks
+# -----------------------------------------------------------------------------
 .PHONY: fmt
 fmt:
 	@gofmt -w -s -d configuration
@@ -57,8 +57,17 @@ docker: docker-rmi-for-build
 		--build-arg GO_BUILD_FILES=$(GIT_REPOSITORY_NAME) \
 		build/docker
 
+.PHONY: docker-development-cache
+docker-development-cache: docker-rmi-for-build-development-cache
+	docker build \
+		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
+		build/docker
+
 .PHONY: docker-build
 docker-build: copy-docker-files docker delete-docker-files
+
+.PHONY: docker-build-development-cache
+docker-build-development-cache: copy-docker-files docker-development-cache delete-docker-files
 
 # -----------------------------------------------------------------------------
 # Clean up targets
@@ -70,8 +79,12 @@ docker-rmi-for-build:
 		$(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
 		$(GIT_REPOSITORY_NAME)
 
+.PHONY: docker-rmi-for-build-development-cache
+docker-rmi-for-build-development-cache:
+	-docker rmi --force $(GIT_REPOSITORY_NAME):$(GIT_VERSION)
+
 .PHONY: clean
-clean: docker-rmi-for-build
+clean: docker-rmi-for-build docker-rmi-for-build-development-cache
 
 # -----------------------------------------------------------------------------
 # Help
