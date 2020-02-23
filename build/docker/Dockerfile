@@ -3,8 +3,7 @@
 # -----------------------------------------------------------------------------
 FROM golang:1.13.4-alpine3.10 as BUILD
 
-ARG GITHUB_HEAD_REF="master"
-ARG GITHUB_EVENT_NAME="push"
+ARG GO_BUILD_FILES=git-action-jira-issue-creation
 
 # Add github
 RUN apk update && \
@@ -13,18 +12,10 @@ RUN apk update && \
         git \
         make
 
-WORKDIR /go/src
+# Copy repo
+COPY ${GO_BUILD_FILES} /go/src/${GO_BUILD_FILES}
 
-# Clone repo
-RUN git clone https://github.com/senzing/git-action-jira-issue-creation.git
-
-# Checkout to target branch and if not master, then locally test
-# merging master into branch.
-WORKDIR /go/src/git-action-jira-issue-creation
-RUN git checkout ${GITHUB_HEAD_REF}; \
-    if [[ "${GITHUB_HEAD_REF}" != "master" && ${GITHUB_EVENT_NAME} == "pull_request" ]]; then \
-        git merge master; \
-    fi
+WORKDIR /go/src/${GO_BUILD_FILES}
 
 # Building go app
 RUN make build
@@ -42,5 +33,9 @@ LABEL "com.github.actions.description"="Create a Jira Issue"
 COPY --from=BUILD /go/bin/git-action-jira-issue-creation /usr/bin
 COPY --from=BUILD /go/src/git-action-jira-issue-creation/LICENSE /
 COPY --from=BUILD /go/src/git-action-jira-issue-creation/README.md /
+
+RUN mkdir -p /github/workspace
+
+WORKDIR /github/workspace
 
 ENTRYPOINT ["git-action-jira-issue-creation"]

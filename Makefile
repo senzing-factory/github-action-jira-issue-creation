@@ -1,24 +1,19 @@
-# -------------
-# VARIABLES
-# -------------
+# -----------------------------------------------------------------------------
+# Variables
+# -----------------------------------------------------------------------------
 # Git variables
 
 GIT_REPOSITORY_NAME := $(shell basename `git rev-parse --show-toplevel`)
 GIT_VERSION := $(shell git describe --always --tags --long --dirty | sed -e 's/\-0//' -e 's/\-g.......//')
 
-# Docker variables
-
-DOCKER_IMAGE_TAG ?= $(GIT_REPOSITORY_NAME):$(GIT_VERSION)
-DOCKER_IMAGE_NAME := senzing/template
-
-# -------------
-# FUNCTIONS
-# -------------
+# -----------------------------------------------------------------------------
+# Functions
+# -----------------------------------------------------------------------------
 
 
-# -------------
-# TASKS
-# -------------
+# -----------------------------------------------------------------------------
+# Tasks
+# -----------------------------------------------------------------------------
 .PHONY: fmt
 fmt:
 	@gofmt -w -s -d configuration
@@ -38,21 +33,41 @@ build: fmt
 default: help
 
 # -----------------------------------------------------------------------------
-# Docker-based builds
+# Copy files to docker build folder
+# -----------------------------------------------------------------------------
+.PHONY: copy-docker-files
+copy-docker-files:
+	@mkdir -p build/docker/$(GIT_REPOSITORY_NAME)
+	@cp Makefile LICENSE README.md main.go go.mod go.sum build/docker/$(GIT_REPOSITORY_NAME)
+	@cp -r configuration build/docker/$(GIT_REPOSITORY_NAME)
+
+.PHONY: delete-docker-files
+delete-docker-files:
+	@rm -rf build/docker/$(GIT_REPOSITORY_NAME)
+
+# -----------------------------------------------------------------------------
+# Docker-based build
 # -----------------------------------------------------------------------------
 
-.PHONY: docker-build
-docker-build: docker-rmi-for-build
+.PHONY: docker
+docker: docker-rmi-for-build
 	docker build \
-	    --tag $(DOCKER_IMAGE_NAME) \
-		--tag $(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
-		.
+	    --tag $(GIT_REPOSITORY_NAME) \
+		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
+		--build-arg GO_BUILD_FILES=$(GIT_REPOSITORY_NAME) \
+		build/docker
+
+.PHONY: docker-development-cache
+docker-development-cache: docker-rmi-for-build-development-cache
+	docker build \
+		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
+		build/docker
+
+.PHONY: docker-build
+docker-build: copy-docker-files docker delete-docker-files
 
 .PHONY: docker-build-development-cache
-docker-build-development-cache: docker-rmi-for-build-development-cache
-	docker build \
-		--tag $(DOCKER_IMAGE_TAG) \
-		.
+docker-build-development-cache: copy-docker-files docker-development-cache delete-docker-files
 
 # -----------------------------------------------------------------------------
 # Clean up targets
@@ -61,12 +76,12 @@ docker-build-development-cache: docker-rmi-for-build-development-cache
 .PHONY: docker-rmi-for-build
 docker-rmi-for-build:
 	-docker rmi --force \
-		$(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
-		$(DOCKER_IMAGE_NAME)
+		$(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
+		$(GIT_REPOSITORY_NAME)
 
 .PHONY: docker-rmi-for-build-development-cache
 docker-rmi-for-build-development-cache:
-	-docker rmi --force $(DOCKER_IMAGE_TAG)
+	-docker rmi --force $(GIT_REPOSITORY_NAME):$(GIT_VERSION)
 
 .PHONY: clean
 clean: docker-rmi-for-build docker-rmi-for-build-development-cache

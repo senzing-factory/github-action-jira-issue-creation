@@ -24,6 +24,7 @@ jobs:
         env:
           JIRA_ACCOUNT_URL: https://someaccount.atlassian.net/
           JIRA_API_TOKEN: jiraApiToken
+          JIRA_ISSUE_ATTACHMENT: log_file.log
           JIRA_ISSUE_DESCRIPTION: Demo'ing Jira Issue Creation
           JIRA_ISSUE_SUMMARY: Demo'ing Jira Issue Creation
           JIRA_ISSUE_TYPE: Demo'ing Jira Issue Creation
@@ -41,11 +42,16 @@ These are the environment variables that can be set to pass in additional inform
 |--------------------|:--------:|-------------|
 | JIRA_ACCOUNT_URL | Yes | Base url to the Jira account. |
 | JIRA_API_TOKEN | Yes | Jira API Token used instead of a password. |
+| JIRA_ISSUE_ATTACHMENT | No | File to attach to the Jira Issue. |
 | JIRA_ISSUE_DESCRIPTION | Yes | Body of the Jira Issue. |
-| JIRA_ISSUE_SUMMARY | Yes | Title of the Jira Issue. |
 | JIRA_ISSUE_TYPE | Yes | Type of issue to be created (Bug or Task). |
+| JIRA_ISSUE_SUMMARY | Yes | Title of the Jira Issue. |
 | JIRA_PROJECT | Yes | Jira project the ticket will be filed under. |
 | JIRA_USERNAME | Yes | Jira user email. |
+
+## JIRA_ISSUE_ATTACHMENT Usage
+
+Git Actions mounts the runner's working directory to /github/workspace as a default and it is controlled by Git Hub's system. Make sure the file being attached is stored in the runner's workspace (it will be in the directory the repo was clone into on the runner). Otherwise, this Git Action will not be able to see the file it needs to attach to the Jira Issue.
 
 ## Reference
 
