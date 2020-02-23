@@ -16,7 +16,7 @@ COPY . /go/src/git-action-jira-issue-creation
 WORKDIR /go/src/git-action-jira-issue-creation
 
 # Building go app
-RUN ls -lart
+RUN make build
 
 # -----------------------------------------------------------------------------
 # Stage: BUILD
