@@ -7,10 +7,11 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Jira Creation Demo
-        uses: senzing/git-action-jira-issue-creation@1.0.0
+        uses: senzing/git-action-jira-issue-creation@master
         env:
           JIRA_ACCOUNT_URL: https://someaccount.atlassian.net/
-          JIRA_API_TOKEN: jiraApiToke
+          JIRA_API_TOKEN: jiraApiToken
+          JIRA_ISSUE_ATTACHMENT: log_file.log
           JIRA_ISSUE_DESCRIPTION: Demo'ing Jira Issue Creation
           JIRA_ISSUE_SUMMARY: Demo'ing Jira Issue Creation
           JIRA_ISSUE_TYPE: Demo'ing Jira Issue Creation

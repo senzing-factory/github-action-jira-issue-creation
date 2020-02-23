@@ -24,6 +24,7 @@ jobs:
         env:
           JIRA_ACCOUNT_URL: https://someaccount.atlassian.net/
           JIRA_API_TOKEN: jiraApiToken
+          JIRA_ISSUE_ATTACHMENT: log_file.log
           JIRA_ISSUE_DESCRIPTION: Demo'ing Jira Issue Creation
           JIRA_ISSUE_SUMMARY: Demo'ing Jira Issue Creation
           JIRA_ISSUE_TYPE: Demo'ing Jira Issue Creation
@@ -41,9 +42,10 @@ These are the environment variables that can be set to pass in additional inform
 |--------------------|:--------:|-------------|
 | JIRA_ACCOUNT_URL | Yes | Base url to the Jira account. |
 | JIRA_API_TOKEN | Yes | Jira API Token used instead of a password. |
+| JIRA_ISSUE_ATTACHMENT | No | File to attach to the Jira Issue. |
 | JIRA_ISSUE_DESCRIPTION | Yes | Body of the Jira Issue. |
-| JIRA_ISSUE_SUMMARY | Yes | Title of the Jira Issue. |
 | JIRA_ISSUE_TYPE | Yes | Type of issue to be created (Bug or Task). |
+| JIRA_ISSUE_SUMMARY | Yes | Title of the Jira Issue. |
 | JIRA_PROJECT | Yes | Jira project the ticket will be filed under. |
 | JIRA_USERNAME | Yes | Jira user email. |
 

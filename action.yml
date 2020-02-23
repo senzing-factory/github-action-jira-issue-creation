@@ -9,4 +9,4 @@ outputs:
     description: 'Url to the jira issue created'
 runs:
   using: 'docker'
-  image: 'docker://senzing/git-action-jira-issue-creation:1.0.0'
+  image: 'docker://senzing/git-action-jira-issue-creation:1.1.0'
