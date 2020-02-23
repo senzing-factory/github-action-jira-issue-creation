@@ -3,9 +3,6 @@
 # -----------------------------------------------------------------------------
 FROM golang:1.13.4-alpine3.10 as BUILD
 
-ARG GITHUB_HEAD_REF="master"
-ARG GITHUB_EVENT_NAME="push"
-
 # Add github
 RUN apk update && \
     apk upgrade && \
