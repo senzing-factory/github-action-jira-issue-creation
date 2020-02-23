@@ -6,11 +6,6 @@
 GIT_REPOSITORY_NAME := $(shell basename `git rev-parse --show-toplevel`)
 GIT_VERSION := $(shell git describe --always --tags --long --dirty | sed -e 's/\-0//' -e 's/\-g.......//')
 
-# Docker variables
-
-DOCKER_IMAGE_TAG ?= $(GIT_REPOSITORY_NAME):$(GIT_VERSION)
-DOCKER_IMAGE_NAME := senzing/template
-
 # -------------
 # FUNCTIONS
 # -------------
@@ -55,14 +50,14 @@ delete-docker-files:
 # -----------------------------------------------------------------------------
 
 .PHONY: docker
-docker: docker-rmi-for-build copy-docker-files
+docker: docker-rmi-for-build
 	docker build \
-	    --tag $(DOCKER_IMAGE_NAME) \
+	    --tag $(GIT_REPOSITORY_NAME) \
 		--tag $(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
 		build/docker
 
 .PHONY: docker-build
-docker-build: docker delete-docker-files
+docker-build: copy-docker-files docker delete-docker-files
 
 # -----------------------------------------------------------------------------
 # Clean up targets
@@ -71,8 +66,8 @@ docker-build: docker delete-docker-files
 .PHONY: docker-rmi-for-build
 docker-rmi-for-build:
 	-docker rmi --force \
-		$(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
-		$(DOCKER_IMAGE_NAME)
+		$(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
+		$(GIT_REPOSITORY_NAME)
 
 .PHONY: clean
 clean: docker-rmi-for-build
