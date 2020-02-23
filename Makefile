@@ -46,13 +46,13 @@ docker-build: docker-rmi-for-build
 	docker build \
 	    --tag $(DOCKER_IMAGE_NAME) \
 		--tag $(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
-		.
+		build/docker
 
 .PHONY: docker-build-development-cache
 docker-build-development-cache: docker-rmi-for-build-development-cache
 	docker build \
 		--tag $(DOCKER_IMAGE_TAG) \
-		.
+		build/docker
 
 # -----------------------------------------------------------------------------
 # Clean up targets
