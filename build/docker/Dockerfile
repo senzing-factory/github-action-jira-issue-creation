@@ -3,6 +3,8 @@
 # -----------------------------------------------------------------------------
 FROM golang:1.13.4-alpine3.10 as BUILD
 
+ARG GO_BUILD_FILES=git-action-jira-issue-creation
+
 # Add github
 RUN apk update && \
     apk upgrade && \
@@ -11,12 +13,12 @@ RUN apk update && \
         make
 
 # Copy repo
-COPY . /go/src/git-action-jira-issue-creation
+COPY ${GO_BUILD_FILES} /go/src/${GO_BUILD_FILES}
 
-WORKDIR /go/src/git-action-jira-issue-creation
+WORKDIR /go/src/${GO_BUILD_FILES}
 
 # Building go app
-RUN ls -lart
+RUN make build
 
 # -----------------------------------------------------------------------------
 # Stage: BUILD
