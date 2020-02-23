@@ -57,7 +57,7 @@ docker: docker-rmi-for-build
 		build/docker
 
 .PHONY: docker-build
-docker-build: copy-docker-files docker delete-docker-files
+docker-build: copy-docker-files delete-docker-files
 
 # -----------------------------------------------------------------------------
 # Clean up targets
