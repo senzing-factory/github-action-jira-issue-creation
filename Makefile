@@ -39,8 +39,8 @@ default: help
 copy-docker-files:
 	@mkdir -p build/docker/$(GIT_REPOSITORY_NAME)
 	@cp Makefile LICENSE README.md main.go go.mod go.sum build/docker/$(GIT_REPOSITORY_NAME)
-	@ls -lart build/docker/$(GIT_REPOSITORY_NAME)
 	@cp -r configuration build/docker/$(GIT_REPOSITORY_NAME)
+	@ls -lart build/docker/$(GIT_REPOSITORY_NAME)
 
 .PHONY: delete-docker-files
 delete-docker-files:
