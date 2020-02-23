@@ -53,7 +53,7 @@ delete-docker-files:
 docker: docker-rmi-for-build
 	docker build \
 	    --tag $(GIT_REPOSITORY_NAME) \
-		--tag $(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
+		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
 		build/docker
 
 .PHONY: docker-build
