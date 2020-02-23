@@ -34,8 +34,8 @@ COPY --from=BUILD /go/bin/git-action-jira-issue-creation /usr/bin
 COPY --from=BUILD /go/src/git-action-jira-issue-creation/LICENSE /
 COPY --from=BUILD /go/src/git-action-jira-issue-creation/README.md /
 
-RUN mkdir -p /github
+RUN mkdir -p /github/workspace
 
-WORKDIR /github
+WORKDIR /github/workspace
 
 ENTRYPOINT ["git-action-jira-issue-creation"]
