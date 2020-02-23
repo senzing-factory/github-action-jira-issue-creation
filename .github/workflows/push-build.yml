@@ -15,7 +15,7 @@ jobs:
       - name: Check out to branch
         run: git checkout ${GITHUB_HEAD_REF:-${GITHUB_REF##*/}}
       - name: Merge master into branch
-        run: git merge master
+        run: git merge origin/master
       - name: Build Docker Image
         id: build_docker_image
         run: make docker-build
