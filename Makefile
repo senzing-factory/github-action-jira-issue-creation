@@ -38,21 +38,31 @@ build: fmt
 default: help
 
 # -----------------------------------------------------------------------------
-# Docker-based builds
+# Copy files to docker build folder
+# -----------------------------------------------------------------------------
+.PHONY: copy-docker-files
+copy-docker-files:
+	@mkdir -p build/docker/$(GIT_REPOSITORY_NAME)
+	@cp Makefile LICENSE README.md main.go go.mod go.sum build/docker/$(GIT_REPOSITORY_NAME)
+	@cp -r configuration build/docker/$(GIT_REPOSITORY_NAME)
+
+.PHONY: delete-docker-files
+delete-docker-files:
+	@rm -rf build/docker/$(GIT_REPOSITORY_NAME)
+
+# -----------------------------------------------------------------------------
+# Docker-based build
 # -----------------------------------------------------------------------------
 
-.PHONY: docker-build
-docker-build: docker-rmi-for-build
+.PHONY: docker
+docker: docker-rmi-for-build copy-docker-files
 	docker build \
 	    --tag $(DOCKER_IMAGE_NAME) \
 		--tag $(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
-		.
+		build/docker
 
-.PHONY: docker-build-development-cache
-docker-build-development-cache: docker-rmi-for-build-development-cache
-	docker build \
-		--tag $(DOCKER_IMAGE_TAG) \
-		.
+.PHONY: docker-build
+docker-build: docker delete-docker-files
 
 # -----------------------------------------------------------------------------
 # Clean up targets
@@ -64,12 +74,8 @@ docker-rmi-for-build:
 		$(DOCKER_IMAGE_NAME):$(GIT_VERSION) \
 		$(DOCKER_IMAGE_NAME)
 
-.PHONY: docker-rmi-for-build-development-cache
-docker-rmi-for-build-development-cache:
-	-docker rmi --force $(DOCKER_IMAGE_TAG)
-
 .PHONY: clean
-clean: docker-rmi-for-build docker-rmi-for-build-development-cache
+clean: docker-rmi-for-build
 
 # -----------------------------------------------------------------------------
 # Help
