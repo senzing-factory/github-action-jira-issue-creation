@@ -22,8 +22,7 @@ WORKDIR /go/src/git-action-jira-issue-creation
 
 # Check merge if build is triggered by a pull request
 WORKDIR /go/src/git-action-jira-issue-creation
-RUN if [[ "${GITHUB_HEAD_REF}" != "master" && ${GITHUB_EVENT_NAME} == "pull_request" ]]; \
-    then \
+RUN if [[ "${GITHUB_HEAD_REF}" != "master" && "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then \
         git checkout ${GITHUB_HEAD_REF}; \
         git merge master; \
     fi

@@ -41,6 +41,8 @@ default: help
 .PHONY: docker-build
 docker-build: docker-rmi-for-build
 	docker build \
+		--build-arg GITHUB_HEAD_REF=$(GITHUB_HEAD_REF) \
+		--build-arg GITHUB_EVENT_NAME=$(GITHUB_EVENT_NAME) \
 	    --tag $(GIT_REPOSITORY_NAME) \
 		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
 		build/docker
@@ -48,6 +50,8 @@ docker-build: docker-rmi-for-build
 .PHONY: docker-build-development-cache
 docker-build-development-cache: docker-rmi-for-build-development-cache
 	docker build \
+		--build-arg GITHUB_HEAD_REF=$(GITHUB_HEAD_REF) \
+		--build-arg GITHUB_EVENT_NAME=$(GITHUB_EVENT_NAME) \
 		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
 		build/docker
 
