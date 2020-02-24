@@ -5,6 +5,8 @@
 
 GIT_REPOSITORY_NAME := $(shell basename `git rev-parse --show-toplevel`)
 GIT_VERSION := $(shell git describe --always --tags --long --dirty | sed -e 's/\-0//' -e 's/\-g.......//')
+GITHUB_HEAD_REF ?= "master"
+GITHUB_EVENT_NAME ?= "push"
 
 # -----------------------------------------------------------------------------
 # Functions
@@ -33,41 +35,22 @@ build: fmt
 default: help
 
 # -----------------------------------------------------------------------------
-# Copy files to docker build folder
-# -----------------------------------------------------------------------------
-.PHONY: copy-docker-files
-copy-docker-files:
-	@mkdir -p build/docker/$(GIT_REPOSITORY_NAME)
-	@cp Makefile LICENSE README.md main.go go.mod go.sum build/docker/$(GIT_REPOSITORY_NAME)
-	@cp -r configuration build/docker/$(GIT_REPOSITORY_NAME)
-
-.PHONY: delete-docker-files
-delete-docker-files:
-	@rm -rf build/docker/$(GIT_REPOSITORY_NAME)
-
-# -----------------------------------------------------------------------------
 # Docker-based build
 # -----------------------------------------------------------------------------
 
-.PHONY: docker
-docker: docker-rmi-for-build
+.PHONY: docker-build
+docker-build: docker-rmi-for-build
 	docker build \
 	    --tag $(GIT_REPOSITORY_NAME) \
 		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
 		--build-arg GO_BUILD_FILES=$(GIT_REPOSITORY_NAME) \
 		build/docker
 
-.PHONY: docker-development-cache
-docker-development-cache: docker-rmi-for-build-development-cache
+.PHONY: docker-build-development-cache
+docker-build-development-cache: docker-rmi-for-build-development-cache
 	docker build \
 		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
 		build/docker
-
-.PHONY: docker-build
-docker-build: copy-docker-files docker delete-docker-files
-
-.PHONY: docker-build-development-cache
-docker-build-development-cache: copy-docker-files docker-development-cache delete-docker-files
 
 # -----------------------------------------------------------------------------
 # Clean up targets
