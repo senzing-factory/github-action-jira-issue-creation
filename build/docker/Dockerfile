@@ -3,7 +3,8 @@
 # -----------------------------------------------------------------------------
 FROM golang:1.13.4-alpine3.10 as BUILD
 
-ARG GO_BUILD_FILES=git-action-jira-issue-creation
+ARG GITHUB_HEAD_REF="master"
+ARG GITHUB_EVENT_NAME="push"
 
 # Add github
 RUN apk update && \
@@ -12,10 +13,19 @@ RUN apk update && \
         git \
         make
 
-# Copy repo
-COPY ${GO_BUILD_FILES} /go/src/${GO_BUILD_FILES}
+WORKDIR /go/src
 
-WORKDIR /go/src/${GO_BUILD_FILES}
+# Clone repo
+RUN git clone https://github.com/senzing/git-action-jira-issue-creation.git
+
+WORKDIR /go/src/git-action-jira-issue-creation
+
+# Check merge if build is triggered by a pull request
+WORKDIR /go/src/git-action-jira-issue-creation
+RUN if [[ "${GITHUB_HEAD_REF}" != "master" && "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then \
+        git checkout ${GITHUB_HEAD_REF}; \
+        git merge master; \
+    fi
 
 # Building go app
 RUN make build

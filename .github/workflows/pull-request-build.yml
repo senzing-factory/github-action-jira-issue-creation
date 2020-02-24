@@ -18,5 +18,8 @@ jobs:
         run: git merge origin/master
       - name: Build Docker Image
         id: build_docker_image
-        run: make docker-build
-
+        run: |
+          make \
+            GITHUB_HEAD_REF=${GITHUB_HEAD_REF:-${GITHUB_REF##*/}} \
+            GITHUB_EVENT_NAME=${GITHUB_EVENT_NAME} \
+            docker-build
