@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added to 1.1.0
 
 - Ability to attach files to the Jira Issue
-- Update make file so it can be used both by the Git Actions pipeline and directly
 - Docker file to include the default Git Actions workspace so it can be leveraged to interact with the runner's workspace during a CI/CD pipeline.
 
 ## [1.0.0] - 2020-01-11
