@@ -43,7 +43,6 @@ docker-build: docker-rmi-for-build
 	docker build \
 	    --tag $(GIT_REPOSITORY_NAME) \
 		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
-		--build-arg GO_BUILD_FILES=$(GIT_REPOSITORY_NAME) \
 		build/docker
 
 .PHONY: docker-build-development-cache
