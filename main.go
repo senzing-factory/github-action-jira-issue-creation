@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	jira "github.com/andygrunwald/go-jira"
-	"github.com/senzing/git-action-jira-issue-creation/configuration"
-	"github.com/pkg/errors"
-	"os"
 	"log"
+	"os"
+
+	jira "github.com/andygrunwald/go-jira"
+	"github.com/pkg/errors"
+	"github.com/senzing/git-action-jira-issue-creation/configuration"
 )
 
 func main() {
@@ -24,9 +25,9 @@ func main() {
 		log.Fatalf("Exception: %v", err)
 	}
 
-	jiraApiToken := config.JiraApiToken
+	JiraAPIToken := config.JiraAPIToken
 	jiraUsername := config.JiraUsername
-	jiraAccountUrl := config.JiraAccountUrl
+	JiraAccountURL := config.JiraAccountURL
 	jiraProject := config.JiraProject
 	jiraIssueType := config.JiraIssueType
 	jiraIssueSummary := config.JiraIssueSummary
@@ -35,10 +36,10 @@ func main() {
 
 	tp := jira.BasicAuthTransport{
 		Username: jiraUsername,
-		Password: jiraApiToken,
+		Password: JiraAPIToken,
 	}
 
-	jiraClient, err := jira.NewClient(tp.Client(), jiraAccountUrl)
+	jiraClient, err := jira.NewClient(tp.Client(), JiraAccountURL)
 	if err != nil {
 		log.Fatalf("Exception: %v", err)
 	}
@@ -83,10 +84,10 @@ func main() {
 			jiraClient.Issue.PostAttachment(issue.Key, f, jiraIssueAttachment)
 		}
 
-		result = fmt.Sprintf("%sbrowse/%s", jiraAccountUrl, string(issue.Key))
+		result = fmt.Sprintf("%sbrowse/%s", JiraAccountURL, issue.Key)
 	} else {
 		for _, issue := range issues {
-			result = fmt.Sprintf("%sbrowse/%s", jiraAccountUrl, string(issue.Key))
+			result = fmt.Sprintf("%sbrowse/%s", JiraAccountURL, issue.Key)
 		}
 	}
 	fmt.Printf(fmt.Sprintf("::set-output name=jira_issue_url::%s", result))

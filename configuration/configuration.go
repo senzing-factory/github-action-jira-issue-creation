@@ -6,9 +6,9 @@ import (
 )
 
 type Config struct {
-	JiraApiToken         string
+	JiraAPIToken         string
 	JiraUsername         string
-	JiraAccountUrl       string
+	JiraAccountURL       string
 	JiraProject          string
 	JiraIssueType        string
 	JiraIssueDescription string
@@ -24,7 +24,7 @@ func (config *Config) Init() error {
 	if os.Getenv("JIRA_API_TOKEN") == "" {
 		err = errors.New("JIRA_API_TOKEN must be set")
 	} else {
-		config.JiraApiToken = os.Getenv("JIRA_API_TOKEN")
+		config.JiraAPIToken = os.Getenv("JIRA_API_TOKEN")
 	}
 
 	if os.Getenv("JIRA_USERNAME") == "" {
@@ -36,7 +36,7 @@ func (config *Config) Init() error {
 	if os.Getenv("JIRA_ACCOUNT_URL") == "" {
 		err = errors.New("JIRA_ACCOUNT_URL must be set")
 	} else {
-		config.JiraAccountUrl = os.Getenv("JIRA_ACCOUNT_URL")
+		config.JiraAccountURL = os.Getenv("JIRA_ACCOUNT_URL")
 	}
 
 	if os.Getenv("JIRA_PROJECT") == "" {
