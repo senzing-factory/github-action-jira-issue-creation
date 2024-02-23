@@ -40,7 +40,7 @@ These are the environment variables that can be set to pass in additional inform
 
 | Variable Name      | Required | Description |
 |--------------------|:--------:|-------------|
-| JIRA_ACCOUNT_URL | Yes | Base url to the Jira account. |
+| JIRA_ACCOUNT_URL | Yes | Base URL to the Jira account. |
 | JIRA_API_TOKEN | Yes | Jira API Token used instead of a password. |
 | JIRA_ISSUE_ATTACHMENT | No | File to attach to the Jira Issue. |
 | JIRA_ISSUE_DESCRIPTION | Yes | Body of the Jira Issue. |
@@ -51,7 +51,7 @@ These are the environment variables that can be set to pass in additional inform
 
 ## JIRA_ISSUE_ATTACHMENT Usage
 
-Git Actions mounts the runner's working directory to /github/workspace as a default and it is controlled by Git Hub's system. Make sure the file being attached is stored in the runner's workspace (it will be in the directory the repo was clone into on the runner). Otherwise, this Git Action will not be able to see the file it needs to attach to the Jira Issue.
+Git Actions mounts the runner's working directory to /github/workspace as a default and it is controlled by Git Hub's system. Make sure the file being attached is stored in the runner's workspace (it will be in the directory the repository was clone into on the runner). Otherwise, this Git Action will not be able to see the file it needs to attach to the Jira Issue.
 
 ## Reference
 
