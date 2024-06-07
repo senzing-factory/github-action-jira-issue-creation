@@ -8,12 +8,14 @@ ARG GITHUB_EVENT_NAME="push"
 
 # Add github
 RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache \
-        git \
-        make
+  apk upgrade && \
+  apk add --no-cache \
+  git \
+  make
 
 WORKDIR /go/src
+
+HEALTHCHECK CMD git --version || exit 1
 
 # Clone repo
 RUN git clone https://github.com/senzing/git-action-jira-issue-creation.git
@@ -23,9 +25,9 @@ WORKDIR /go/src/git-action-jira-issue-creation
 # Check merge if build is triggered by a pull request
 WORKDIR /go/src/git-action-jira-issue-creation
 RUN if [[ "${GITHUB_HEAD_REF}" != "master" && "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then \
-        git checkout ${GITHUB_HEAD_REF}; \
-        git merge master; \
-    fi
+  git checkout ${GITHUB_HEAD_REF}; \
+  git merge master; \
+  fi
 
 # Building go app
 RUN make build
@@ -45,6 +47,8 @@ COPY --from=BUILD /go/src/git-action-jira-issue-creation/LICENSE /
 COPY --from=BUILD /go/src/git-action-jira-issue-creation/README.md /
 
 RUN mkdir -p /github/workspace
+
+USER 1001
 
 WORKDIR /github/workspace
 
