@@ -90,5 +90,6 @@ func main() {
 			result = fmt.Sprintf("%sbrowse/%s", JiraAccountURL, issue.Key)
 		}
 	}
-	fmt.Printf(fmt.Sprintf("::set-output name=jira_issue_url::%s", result))
+	formatted := fmt.Sprintf("::set-output name=jira_issue_url::%s", result)
+	fmt.Printf("%s", formatted)
 }

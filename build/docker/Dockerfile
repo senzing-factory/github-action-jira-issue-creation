@@ -20,8 +20,6 @@ HEALTHCHECK CMD git --version || exit 1
 # Clone repo
 RUN git clone https://github.com/senzing-factory/github-action-jira-issue-creation.git
 
-WORKDIR /go/src/github-action-jira-issue-creation
-
 # Check merge if build is triggered by a pull request
 WORKDIR /go/src/github-action-jira-issue-creation
 RUN if [[ "${GITHUB_HEAD_REF}" != "master" && "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then \
