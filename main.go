@@ -81,7 +81,10 @@ func main() {
 			if err != nil {
 				log.Printf("%+v", errors.Wrap(err, "Exception"))
 			}
-			jiraClient.Issue.PostAttachment(issue.Key, f, jiraIssueAttachment)
+			_, _, error := jiraClient.Issue.PostAttachment(issue.Key, f, jiraIssueAttachment)
+			if error != nil {
+				log.Printf("%+v", errors.Wrap(error, "Exception"))
+			}
 		}
 
 		result = fmt.Sprintf("%sbrowse/%s", JiraAccountURL, issue.Key)
