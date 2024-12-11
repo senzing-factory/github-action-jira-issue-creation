@@ -23,7 +23,6 @@ RUN git clone https://github.com/senzing-factory/github-action-jira-issue-creati
 WORKDIR /go/src/github-action-jira-issue-creation
 
 # Check merge if build is triggered by a pull request
-RUN ls -tlc
 RUN git checkout ${GITHUB_HEAD_REF}; \
   if [[ "${GITHUB_HEAD_REF}" != "main" && ${GITHUB_EVENT_NAME} == "pull_request" ]]; then \
   git merge main; \
@@ -31,8 +30,6 @@ RUN git checkout ${GITHUB_HEAD_REF}; \
 
 # Building go app
 RUN make build
-RUN ls -tlc /go/
-RUN ls -tlc /go/bin/
 
 # -----------------------------------------------------------------------------
 # Stage: BUILD
