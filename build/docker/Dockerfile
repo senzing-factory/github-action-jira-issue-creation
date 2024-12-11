@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 FROM golang:1.13.4-alpine3.10 as BUILD
 
-ARG GITHUB_HEAD_REF="master"
+ARG GITHUB_HEAD_REF="main"
 ARG GITHUB_EVENT_NAME="push"
 
 # Add github
@@ -20,15 +20,19 @@ HEALTHCHECK CMD git --version || exit 1
 # Clone repo
 RUN git clone https://github.com/senzing-factory/github-action-jira-issue-creation.git
 
-# Check merge if build is triggered by a pull request
 WORKDIR /go/src/github-action-jira-issue-creation
-RUN if [[ "${GITHUB_HEAD_REF}" != "master" && "${GITHUB_EVENT_NAME}" == "pull_request" ]]; then \
-  git checkout ${GITHUB_HEAD_REF}; \
-  git merge master; \
+
+# Check merge if build is triggered by a pull request
+RUN ls -tlc
+RUN git checkout ${GITHUB_HEAD_REF}; \
+  if [[ "${GITHUB_HEAD_REF}" != "main" && ${GITHUB_EVENT_NAME} == "pull_request" ]]; then \
+  git merge main; \
   fi
 
 # Building go app
 RUN make build
+RUN ls -tlc /go/
+RUN ls -tlc /go/bin/
 
 # -----------------------------------------------------------------------------
 # Stage: BUILD
