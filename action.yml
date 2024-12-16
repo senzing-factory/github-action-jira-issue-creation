@@ -1,12 +1,12 @@
-name: 'Git Action Jira Issue Creation'
-description: 'Git Action jira issue created by Git Actions'
-author: 'Senzing'
+name: "GitHub Action Jira Issue Creation"
+description: "GitHub Action jira issue created by Git Actions"
+author: "Senzing"
 branding:
-  icon: 'message-square'
-  color: 'purple'
+  icon: "message-square"
+  color: "purple"
 outputs:
   jira_issue_url:
-    description: 'Url to the jira issue created'
+    description: "Url to the jira issue created"
 runs:
-  using: 'docker'
-  image: 'docker://senzing/git-action-jira-issue-creation:1.1.0'
+  using: "docker"
+  image: "docker://senzing-factory/github-action-jira-issue-creation:1.1.0"
