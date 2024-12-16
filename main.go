@@ -81,9 +81,9 @@ func main() {
 			if err != nil {
 				log.Printf("%+v", errors.Wrap(err, "Exception"))
 			}
-			_, _, error := jiraClient.Issue.PostAttachment(issue.Key, f, jiraIssueAttachment)
-			if error != nil {
-				log.Printf("%+v", errors.Wrap(error, "Exception"))
+			_, _, err = jiraClient.Issue.PostAttachment(issue.Key, f, jiraIssueAttachment)
+			if err != nil {
+				log.Printf("%+v", errors.Wrap(err, "Exception"))
 			}
 		}
 
