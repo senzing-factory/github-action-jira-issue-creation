@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # Stage: BUILD
 # -----------------------------------------------------------------------------
-FROM golang:1.24.2-alpine3.21 as BUILD
+FROM golang:1.24.3-alpine3.21 as BUILD
 
 ARG GITHUB_HEAD_REF="main"
 ARG GITHUB_EVENT_NAME="push"
