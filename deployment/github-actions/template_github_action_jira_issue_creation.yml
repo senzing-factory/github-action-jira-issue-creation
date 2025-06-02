@@ -10,6 +10,7 @@ jobs:
         uses: senzing-factory/github-action-jira-issue-creation@master
         env:
           JIRA_ACCOUNT_URL: https://someaccount.atlassian.net/
+          #checkov:skip=CKV_SECRET_6:Not a secret, just an example
           JIRA_API_TOKEN: jiraApiToken
           JIRA_ISSUE_ATTACHMENT: log_file.log
           JIRA_ISSUE_DESCRIPTION: Demo'ing Jira Issue Creation
