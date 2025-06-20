@@ -45,3 +45,9 @@ dist/*
 
 # Jupyter lab
 *.ipynb_checkpoints
+
+# Visual Studio code
+.vscode/*
+!.vscode/cspell.json
+*.code-workspace
+.history
