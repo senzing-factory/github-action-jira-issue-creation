@@ -17,9 +17,5 @@
     "stackoverflow",
     "toplevel"
   ],
-  "ignorePaths": [
-    ".git/**",
-    ".gitignore",
-    "go.sum"
-  ]
+  "ignorePaths": [".git/**", ".gitignore", "go.sum"]
 }
