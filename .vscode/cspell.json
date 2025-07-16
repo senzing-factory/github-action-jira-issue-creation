@@ -9,6 +9,7 @@
     "CODEOWNER",
     "DOCKERHUB",
     "gofmt",
+    "gomod",
     "ICLA",
     "pydevproject",
     "sbrowse",
