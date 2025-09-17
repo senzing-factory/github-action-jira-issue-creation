@@ -8,6 +8,7 @@
     "CCLA",
     "CODEOWNER",
     "DOCKERHUB",
+    "fatih",
     "gofmt",
     "gomod",
     "ICLA",
@@ -15,7 +16,8 @@
     "sbrowse",
     "Senzing",
     "stackoverflow",
-    "toplevel"
+    "toplevel",
+    "trivago"
   ],
   "ignorePaths": [".git/**", ".gitignore", "go.sum"]
 }
