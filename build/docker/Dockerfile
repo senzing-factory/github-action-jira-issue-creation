@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # Stage: build
 # -----------------------------------------------------------------------------
-FROM golang:1.25.1-alpine3.21 AS build
+FROM golang:1.25.1-alpine3.21@sha256:331bde41663c297cba0f5abf37e929be644f3cbd84bf45f49b0df9d774f4d912 AS build
 
 ARG GITHUB_HEAD_REF="main"
 ARG GITHUB_EVENT_NAME="push"
@@ -34,7 +34,7 @@ RUN make build
 # -----------------------------------------------------------------------------
 # Stage: build
 # -----------------------------------------------------------------------------
-FROM alpine:3.22
+FROM alpine:3.22@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
 
 LABEL "com.github.actions.icon"="message-square"
 LABEL "com.github.actions.color"="purple"
