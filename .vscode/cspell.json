@@ -2,22 +2,27 @@
   "version": "0.2",
   "language": "en",
   "words": [
-    "alnum",
-    "andygrunwald",
-    "buildx",
     "CCLA",
     "CODEOWNER",
     "DOCKERHUB",
+    "ICLA",
+    "Senzing",
+    "alnum",
+    "andygrunwald",
+    "buildx",
+    "esbenp",
     "fatih",
     "gofmt",
     "gomod",
-    "ICLA",
     "pydevproject",
     "sbrowse",
-    "Senzing",
     "stackoverflow",
     "toplevel",
     "trivago"
   ],
-  "ignorePaths": [".git/**", ".gitignore", "go.sum"]
+  "ignorePaths": [
+    ".git/**",
+    ".gitignore",
+    "go.sum"
+  ]
 }
