@@ -1,6 +1,11 @@
 # -----------------------------------------------------------------------------
 # Variables
 # -----------------------------------------------------------------------------
+
+# Detect the operating system, architecture, and container runtime.
+
+include makefiles/osdetect.mk
+
 # Git variables
 
 GIT_REPOSITORY_NAME := $(shell basename `git rev-parse --show-toplevel`)
@@ -40,7 +45,7 @@ default: help
 
 .PHONY: docker-build
 docker-build: docker-rmi-for-build
-	docker build \
+	$(CONTAINER_RUNTIME) build \
 		--build-arg GITHUB_HEAD_REF=$(GITHUB_HEAD_REF) \
 		--build-arg GITHUB_EVENT_NAME=$(GITHUB_EVENT_NAME) \
 	    --tag $(GIT_REPOSITORY_NAME) \
@@ -49,7 +54,7 @@ docker-build: docker-rmi-for-build
 
 .PHONY: docker-build-development-cache
 docker-build-development-cache: docker-rmi-for-build-development-cache
-	docker build \
+	$(CONTAINER_RUNTIME) build \
 		--build-arg GITHUB_HEAD_REF=$(GITHUB_HEAD_REF) \
 		--build-arg GITHUB_EVENT_NAME=$(GITHUB_EVENT_NAME) \
 		--tag $(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
@@ -61,13 +66,13 @@ docker-build-development-cache: docker-rmi-for-build-development-cache
 
 .PHONY: docker-rmi-for-build
 docker-rmi-for-build:
-	-docker rmi --force \
+	-$(CONTAINER_RMI) \
 		$(GIT_REPOSITORY_NAME):$(GIT_VERSION) \
 		$(GIT_REPOSITORY_NAME)
 
 .PHONY: docker-rmi-for-build-development-cache
 docker-rmi-for-build-development-cache:
-	-docker rmi --force $(GIT_REPOSITORY_NAME):$(GIT_VERSION)
+	-$(CONTAINER_RMI) $(GIT_REPOSITORY_NAME):$(GIT_VERSION)
 
 .PHONY: clean
 clean: docker-rmi-for-build docker-rmi-for-build-development-cache
